@@ -37,6 +37,8 @@ public class Comptebancaire extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    int solde = 0;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -57,7 +59,7 @@ public class Comptebancaire extends HttpServlet {
                 op.setMontant(Integer.parseInt(request.getParameter("montant")));
                 ArrayList<Operations> listOperations = (ArrayList<Operations>)getServletContext().getAttribute("listOperations");
                 listOperations.add(op); 
-                //out.println("Votre solde de départ : " + (op.getSolde()) + "<br>");                  
+                out.println("Votre solde de départ : " + solde + "<br>");                  
                 out.println("Voici la liste des opérations effectuées : <br>");
                 for (Operations o:listOperations){
                     out.println(o + "</br>");
@@ -69,18 +71,19 @@ public class Comptebancaire extends HttpServlet {
                 if(virement != null && retrait != null){
                    out.println("Vous devez selectionner qu'une seule action à effectuer sur votre compte ! :");
                 } else {                                          
-                    Solde so =new Solde();
+/*                    Solde so =new Solde();
                         int a = so.getSolde();
                         int b = op.getMontant();
-                        if (virement != null){                        
-                            so.setSolde(a + b) ;
-                                                  
+*/
+                    if (virement != null){                        
+//                          so.setSolde(a + b) ;  
+                        solde = solde + op.getMontant();
                         }
                         if (retrait != null){
-
+                            solde = solde - op.getMontant();
                         }                  
-                    int soldecourant = so.getSolde();
-                    out.println("solde apres opération = " + soldecourant + "<br>");
+//                    int soldecourant = so.getSolde();
+                    out.println("solde apres opération = " + solde + "<br>");
                      
                     
                     }
