@@ -11,13 +11,13 @@ import java.util.Scanner;
  */
 public class Operations {
     String objet;
-    int montant;
-    int soldeAvant;    
-    int newSolde;
+    int montant;        
+    int solde;
     
-    public Operations(String _objet,int _montant){
+    public Operations(String _objet,int _montant, int _solde){
         objet = _objet;
-        montant = _montant;    
+        montant = _montant;
+        solde = _solde;
     }
     
       public Operations() {
@@ -26,16 +26,14 @@ public class Operations {
     	
 	}
     
-    public int getSoldeAvant(){
-        return soldeAvant;
-    }
     
-    public int getNewSolde(){       
-        return newSolde;
-    }
     
     public int getMontant(){
         return montant;
+    }
+    
+    public int getSolde(){
+        return solde;
     }
     
     public void setObjet(String objet){
@@ -46,13 +44,10 @@ public class Operations {
         this.montant = montant;
     }
     
-     public void setNewSolde(int newSolde){
-        this.newSolde = newSolde;        
+    public void setSolde(int solde){
+        this.solde = solde;
     }
-     
-      public void setSoldeAvant(int soldeAvant){
-        this.soldeAvant = soldeAvant;
-    }
+   
      
     
     public String toString()
@@ -61,8 +56,7 @@ public class Operations {
             String retour = "";
             retour = retour + "Objet : " + objet + "   ";
             retour = retour + "Montant : " + montant + "   ";
-            //retour = retour + "Solde Précèdant : " + soldeAvant + "  ";
-            //retour = retour +"Nouveau solde : "+newSolde+"  ";    
+            retour = retour + "Solde : " + solde + "  ";               
             return retour;
         
     }

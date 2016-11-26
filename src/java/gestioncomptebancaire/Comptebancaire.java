@@ -46,6 +46,7 @@ public class Comptebancaire extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Gestion du compte bancaire</h1>");
+            int _solde = 0;
             String virement = request.getParameter("virement");
             String retrait = request.getParameter("retrait");
             if (virement == null && retrait == null){
@@ -58,21 +59,18 @@ public class Comptebancaire extends HttpServlet {
                     op.setObjet(request.getParameter("objet"));            
                     op.setMontant(Integer.parseInt(request.getParameter("montant")));
                     ArrayList<Operations> listOperations = (ArrayList<Operations>)getServletContext().getAttribute("listOperations");
-                    listOperations.add(op); 
-                    int solde = (op.getSoldeAvant());
-                    out.println("Votre solde de départ : " + op.getSoldeAvant() + "<br>");
+                    listOperations.add(op);                     
+                    out.println("Votre solde de départ : " + (op.getSolde()) + "<br>");
                     if (virement != null){                        
-                        solde = (op.getSoldeAvant()) + (op.getMontant());
-                        out.println("solde = " + solde + "<br>");
-                        op.setNewSolde(solde); 
-                        out.println("solde avant : " + (op.getSoldeAvant()) + "<br>" + "Montant a ajouter :" + (op.getMontant()) + "<br>");
-                        op.setSoldeAvant(solde);
+                        _solde = _solde + (op.getMontant());
+                        out.println("solde = " + _solde + "<br>");
+                        op.setSolde(_solde);                         
                     }
                     if (retrait != null){
                         
                     }
                     
-                    out.println("Voici votre nouveau Solde : " + op.getNewSolde() + "<br>");                  
+                    out.println("Voici votre nouveau Solde : " + _solde + "<br>");                  
                     out.println("<br> <br> Voici la liste des opérations effectuées : <br>");
                     for (Operations o:listOperations){
                         out.println(o + "</br>");
