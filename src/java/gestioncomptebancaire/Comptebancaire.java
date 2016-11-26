@@ -23,7 +23,10 @@ public class Comptebancaire extends HttpServlet {
     public void init(ServletConfig c) throws ServletException {
         super.init(c);
         getServletContext().setAttribute("listOperations", new ArrayList<Operations>());
+                
     }
+    
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,42 +48,49 @@ public class Comptebancaire extends HttpServlet {
             out.println("<title>Servlet Comptebancaire</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Gestion du compte bancaire</h1>");
-            int _solde = 0;
+            out.println("<h1>Gestion du compte bancaire</h1>");            
             String virement = request.getParameter("virement");
             String retrait = request.getParameter("retrait");
+                //On ajoute l'opération à la liste des opérations.
+                Operations op = new Operations();                    
+                op.setObjet(request.getParameter("objet"));            
+                op.setMontant(Integer.parseInt(request.getParameter("montant")));
+                ArrayList<Operations> listOperations = (ArrayList<Operations>)getServletContext().getAttribute("listOperations");
+                listOperations.add(op); 
+                //out.println("Votre solde de départ : " + (op.getSolde()) + "<br>");                  
+                out.println("Voici la liste des opérations effectuées : <br>");
+                for (Operations o:listOperations){
+                    out.println(o + "</br>");
+                }
+                out.println("<br>");
             if (virement == null && retrait == null){
                 out.println("Vous devez selectionner une action à effectuer sur votre compte ! :");
             }else{
                 if(virement != null && retrait != null){
                    out.println("Vous devez selectionner qu'une seule action à effectuer sur votre compte ! :");
-                } else {
-                    Operations op = new Operations();           
-                    op.setObjet(request.getParameter("objet"));            
-                    op.setMontant(Integer.parseInt(request.getParameter("montant")));
-                    ArrayList<Operations> listOperations = (ArrayList<Operations>)getServletContext().getAttribute("listOperations");
-                    listOperations.add(op);                     
-                    out.println("Votre solde de départ : " + (op.getSolde()) + "<br>");
-                    if (virement != null){                        
-                        _solde = _solde + (op.getMontant());
-                        out.println("solde = " + _solde + "<br>");
-                        op.setSolde(_solde);                         
-                    }
-                    if (retrait != null){
-                        
-                    }
+                } else {                                          
+                    Solde so =new Solde();
+                        int a = so.getSolde();
+                        int b = op.getMontant();
+                        if (virement != null){                        
+                            so.setSolde(a + b) ;
+                                                  
+                        }
+                        if (retrait != null){
+
+                        }                  
+                    int soldecourant = so.getSolde();
+                    out.println("solde apres opération = " + soldecourant + "<br>");
+                     
                     
-                    out.println("Voici votre nouveau Solde : " + _solde + "<br>");                  
-                    out.println("<br> <br> Voici la liste des opérations effectuées : <br>");
-                    for (Operations o:listOperations){
-                        out.println(o + "</br>");
                     }
+                       
                 }
             out.println("<br><a href=\"index.html\">Retour au menu</a>");
             out.println("</body>");
             out.println("</html>");
         }
-    }}
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
