@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Gestion d'un compte bancaire</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>Gerez votre compte :</div>
+        <form method="get" action="Comptebancaire">
+            <label for="virement">Virement</label><input type="checkbox" name="virement" />
+            <label for="retrait">Retrait</label><input type="checkbox" name="retrait" />
+            <label for="objet">Indiquez l'intitulé </label><input type="text" name="objet" id="objet" required/>
+            <label for="montant">Montant</label><input type="number" name="montant" id="montant" required/>
+            <input type="submit" value="Valider" />
+        </form>
+    </body>
+</html>
